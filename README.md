@@ -1,2 +1,2 @@
 # Turtle
-Package Manager for Terminal
+Setup creator for Linux-based distributinos
