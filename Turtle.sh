@@ -1,9 +1,9 @@
-#this is Turtle
+#this is Turtle (for personal use)
 cat .copyright
 
 #Making the project
 
-read -p "Name of the project :" project && mkdir /home/osito/Desktop/Turtle/"$project" && mkdir -p /home/osito/Desktop/Turtle/"$project"/var/mobile/Library/Preferences && mkdir -p /home/osito/Desktop/Turtle/"$project"/Library/Themes && mkdir -p /home/osito/Desktop/Turtle/"$project"/DEBIAN && touch /home/osito/Desktop/Turtle/"$project"/DEBIAN/control && mkdir -p /var/mobile/Library/iWidgets
+read -p "Name of the project : " project && mkdir /home/osito/Desktop/Turtle/"$project" && mkdir -p /home/osito/Desktop/Turtle/"$project"/var/mobile/Library/Preferences && mkdir -p /home/osito/Desktop/Turtle/"$project"/Library/Themes && mkdir -p /home/osito/Desktop/Turtle/"$project"/DEBIAN && touch /home/osito/Desktop/Turtle/"$project"/DEBIAN/control && mkdir -p /var/mobile/Library/iWidgets
 
 #initializes the SpringBoard theme
 
@@ -117,7 +117,7 @@ fi
 #initializes which Bytafont you are using
 
 while true; do
-read -p "$(tput setaf 9)Bytafont version? : (N OR n is None): $(tput setaf 7)" n7
+read -p "$(tput setaf 9)Bytafont version? (N OR n is None): $(tput setaf 7)" n7
 	case $n7 in
 		[2]* ) echo "Bytafont Version: 2" >> Theme.txt; mkdir -p /home/osito/Desktop/Turtle/"$project"/var/mobile/Library/MyFonts2/; break;;
 		[3]* ) echo "Bytafont Version: 3" >> Theme.txt; mkdir -p /home/osito/Desktop/Turtle/"$project"/var/mobile/Library/Bytafont3/SwapMode/; break;;
@@ -161,17 +161,89 @@ else
 	find $n9 -type f -printf "iWidgets used: %h\n" >> Theme.txt
 fi
 
-read -p "Package Name (lower case): " package && echo "Package: com.$author.$package" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
-read -p "Name of package: " name && echo "Name: $name"  >>  /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
-read -p "Depends: " depends && echo "Depends: mobilesubstrate (>= 0.9.5000), preferenceloader (>= 2.2.2), applist, $depends" >>  /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
-read -p "Version: " version && echo "Version: $version" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
+#initializes the inner micro manager in you
+
+read -p "$(tput setaf 10)Wanna micro-manage?: $(tput setaf 7)" n10
+
+if [[ -z "$n10" ]]; then
+	echo "$(tput setaf 7)You're not a micro-manager"
+else
+	title="What do you wanna micro-manage??"
+	prompt="Pick an option:"
+	options=("Wifi Bars" "Cellular Bars" "Control Center Toggles" "Passcode Buttons" "LockGlyph" "Respring Logo" "Exit")
+
+	echo "$(tput setaf 7)$title"
+	PS3="$prompt "
+	select opt in "${options[@]}" "Quit"; do 
+		case $"$REPLY" in
+			"Wifi Bars")
+				read -p "$(tput setaf 9)Wifi Bars Theme Here: $(tput setaf 7)" wifi
+				wifi=$(eval echo "$wifi")
+				cd $wifi/
+				cp -ar "$wifi" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
+				find $wifi -type f -printf "Wifi Bars Theme: %h\n" >> Theme.txt
+				break;;
+			"Cellular Bars")
+				read -p "$(tput setaf 9)Cellular Bars Theme Here: $(tput setaf 7)" cellular
+				cellular=$(eval echo "$cellular")
+				cd $cellular/
+				cp -ar "$cellular" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
+				find $cellular -type f -printf "Cellular Bars Theme: %h\n" >> Theme.txt
+				break;;
+			"Control Center Toggles")
+				read -p "$(tput setaf 9)CC Toggles Theme Here: $(tput setaf 7)" cctoggles
+				cctoggles=$(eval echo "$cctoggles")
+				cd $cctoggles/
+				cp -ar "$cctoggles" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
+				find $cctoggles -type f -printf "CC Toggle Theme: %h\n" >> Theme.txt
+				break;;
+			"Passcode Buttons")
+				read -p "$(tput setaf 9)Passcode Buttons Theme Here: $(tput setaf 7)" pbtheme
+				pbtheme=$(eval echo "$pbtheme")
+				cd $pbtheme/
+				cp -ar "$pbtheme" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
+				find $pbtheme -type f -printf "Passcode Buttons Theme: %h\n"
+				break;;
+			"LockGlyph")
+				read -p "$(tput setaf 9)LockGlyph Theme Here: $(tput setaf 7)" lgtheme
+				lgtheme=$(eval echo "$lgtheme")
+				cd $lgtheme/
+				cp -ar "$lgtheme" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
+				find $lgtheme -type f -printf "LockGlyph Theme: %h\n"
+				break;;
+			"Respring Logo")
+				read -p "$(tput setaf 9)Respring Logo Here: $(tput setaf 7)" relogo
+				relogo=$(eval echo "relogo")
+				cd $relogo/
+				cp -ar "relogo" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
+				find $relogo -type f -printf "Respring Logo: %h\n"
+				break;;
+			"Quit")
+				break;;
+
+			$(( ${#options[@]}+1 )) ) 
+				read -p "$(tput setaf 9)Any more things you wanna manage?: $(tput setaf 7)" mas 
+					if [[ $mas = y? ]]; then
+						continue;
+					else
+						exit;
+					fi
+		esac
+	done
+fi
+
+read -p "$(tput setaf 2)Package Name (lower case): $(tput setaf 7)" package && echo "Package: com.$author.$package" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
+read -p "$(tput setaf 3)Name of package: $(tput setaf 7)" name && echo "Name: $name"  >>  /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
+read -p "Depends: $(tput setaf 7)" depends && echo "Depends: mobilesubstrate (>= 0.9.5000), preferenceloader (>= 2.2.2), applist, $depends" >>  /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
+read -p "$(tput setaf 4)Version: $(tput setaf 7)" version && echo "Version: $version" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
 echo "Architecture: iphoneos-arm" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
-read -p "Description: " description && echo "Description: $description" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
-read -p "Maintainer : " maintainer && echo "Maintainer: $maintainer" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
-read -p "Author : " author && echo "Author: $author" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
+read -p "$(tput setaf 11)Description: $(tput setaf 7)" description && echo "Description: $description" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
+echo "Maintainer: Osito2017" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
+echo "Author: Osito" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
 echo "Section: Themes (Setup)" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
-echo "Preparing "$project" for packaging"
+echo "$(tput setaf 7)Preparing $(tput setaf 9)$project $(tput setaf 7)for packaging"
 dpkg-deb -b -Zgzip /home/osito/Desktop/Turtle/"$project" >> log.txt && rm log.txt
-echo ""$project" finished its building phase"
-cat display.sh
-echo "Thanks for using Turtle :) "
+echo "$(tput setaf 9)$project $(tput setaf 7)finished its building phase"
+cd /home/osito/Desktop/Turtle
+cat .end
+echo "$(tput setaf 7)Thanks for using Turtle :) "
