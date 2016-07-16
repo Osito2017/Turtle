@@ -46,12 +46,12 @@ if [[ -d "$SETUP"/var/mobile/Library/Preferences ]]; then
 	find $SETUP/var/mobile/Library/Preferences -maxdepth 1 -type f | xargs -I {} cp {} /home/osito/Desktop/$project/var/mobile/Library/Preferences
 	echo "$(tput setaf 9)Preferences $(tput setaf 7)finished copying"
 else
-	echo "$(tput setaf 7)No $(tput setaf 9)Preferences present"
+	echo "$(tput setaf 7)No $(tput setaf 9)Preferences $(tput setaf 7)present"
 fi
 
 if [[ -d "$SETUP"/Library/Zeppelin ]]; then
 	find $SETUP/Library/Zeppelin/ -maxdepth 1 | xargs -I {} cp -bR $SETUP/Library/Zeppelin /home/osito/Desktop/$project/Library
-	echo "$(tput setaf 9)Zeppelin $(tput setaf 9)themes finished copying"
+	echo "$(tput setaf 9)Zeppelin $(tput setaf 7)themes finished copying"
 else
 	echo "$(tput setaf 7)No $(tput setaf 9)Zeppelin $(tput setaf 7)themes present"
 fi
@@ -68,4 +68,12 @@ if [[ -d "$SETUP"/var/mobile/Library/iWidgets ]]; then
 	echo "$(tput setaf 9)iWidgets $(tput setaf 7)finished copying"
 else
 	echo "$(tput setaf 7)No $(tput setaf 9)iWidgets $(tput setaf 7)present"
+fi
+
+if [[ -d "$SETUP"/var/mobile/Library/MyFonts2 ]]; then
+	find $SETUP/var/mobile/Library/MyFonts2 -maxdepth 1 | xargs -I {} cp -bR $SETUP/var/mobile/Library/MyFonts2 /home/osito/Desktop/$project/var/mobile/Library
+	echo "$(tput setaf 9)Fonts $(tput setaf 7)finished copying"
+else 
+	find $SETUP/var/mobile/Library/BytaFont3/SwapMode/ -maxdepth 1 | xargs -I {} cp -bR $SETUP/var/mobile/Library/BytaFont3 /home/osito/Desktop/$project/var/mobile/Library
+	echo "$(tput setaf 9)Fonts $(tput setaf 7)finished copying"
 fi
