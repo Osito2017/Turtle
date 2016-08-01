@@ -161,75 +161,64 @@ else
 	find $n9 -type f -printf "iWidgets used: %h\n" >> Theme.txt
 fi
 
-#initializes the inner micro manager in you
-
-read -p "$(tput setaf 10)Wanna micro-manage?: $(tput setaf 7)" n10
+read -p "$(tput setaf 10)Respring Logo?: $(tput setaf 7)" n10
 
 if [[ -z "$n10" ]]; then
-	echo "$(tput setaf 7)You're not a micro-manager"
+	echo "$(tput setaf 7)No Respring Logo"
 else
-	title="What do you wanna micro-manage??"
-	prompt="Pick an option:"
-	options=("Wifi Bars" "Cellular Bars" "Control Center Toggles" "Passcode Buttons" "LockGlyph" "Respring Logo" "Exit")
+	n10=$(eval echo "$n10")
+	cd $n10/	
+	cp -ar "$n10" /home/osito/Desktop/Turtle/"$project"/var/mobile/Library/iWidgets/ 2> error.txt
+fi
 
-	echo "$(tput setaf 7)$title"
-	PS3="$prompt "
-	select opt in "${options[@]}" "Quit"; do 
-		case $"$REPLY" in
-			"Wifi Bars")
-				read -p "$(tput setaf 9)Wifi Bars Theme Here: $(tput setaf 7)" wifi
-				wifi=$(eval echo "$wifi")
-				cd $wifi/
-				cp -ar "$wifi" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
-				find $wifi -type f -printf "Wifi Bars Theme: %h\n" >> Theme.txt
-				break;;
-			"Cellular Bars")
-				read -p "$(tput setaf 9)Cellular Bars Theme Here: $(tput setaf 7)" cellular
-				cellular=$(eval echo "$cellular")
-				cd $cellular/
-				cp -ar "$cellular" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
-				find $cellular -type f -printf "Cellular Bars Theme: %h\n" >> Theme.txt
-				break;;
-			"Control Center Toggles")
-				read -p "$(tput setaf 9)CC Toggles Theme Here: $(tput setaf 7)" cctoggles
-				cctoggles=$(eval echo "$cctoggles")
-				cd $cctoggles/
-				cp -ar "$cctoggles" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
-				find $cctoggles -type f -printf "CC Toggle Theme: %h\n" >> Theme.txt
-				break;;
-			"Passcode Buttons")
-				read -p "$(tput setaf 9)Passcode Buttons Theme Here: $(tput setaf 7)" pbtheme
-				pbtheme=$(eval echo "$pbtheme")
-				cd $pbtheme/
-				cp -ar "$pbtheme" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
-				find $pbtheme -type f -printf "Passcode Buttons Theme: %h\n"
-				break;;
-			"LockGlyph")
-				read -p "$(tput setaf 9)LockGlyph Theme Here: $(tput setaf 7)" lgtheme
-				lgtheme=$(eval echo "$lgtheme")
-				cd $lgtheme/
-				cp -ar "$lgtheme" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
-				find $lgtheme -type f -printf "LockGlyph Theme: %h\n"
-				break;;
-			"Respring Logo")
-				read -p "$(tput setaf 9)Respring Logo Here: $(tput setaf 7)" relogo
-				relogo=$(eval echo "relogo")
-				cd $relogo/
-				cp -ar "relogo" "/home/osito/Desktop/Turtle/"$project"/Library/Themes/"
-				find $relogo -type f -printf "Respring Logo: %h\n"
-				break;;
-			"Quit")
-				break;;
+read -p "$(tput setaf 10)LockGlyph Theme?: $(tput setaf 7)" n11
 
-			$(( ${#options[@]}+1 )) ) 
-				read -p "$(tput setaf 9)Any more things you wanna manage?: $(tput setaf 7)" mas 
-					if [[ $mas = y? ]]; then
-						continue;
-					else
-						exit;
-					fi
-		esac
-	done
+if [[ -z "$n11" ]]; then
+	echo "$(tput setaf 7)No LockGlyph Theme Used"
+else
+	n11=$(eval echo "$n11")
+	cd $n11/
+	cp -ar "$n11" /home/osito/Desktop/Turtle/"$project"/Library/"Application Support"/LockGlyph/Themes
+fi
+
+read -p "Passcode Buttons?: " n12
+
+if [[ -z "$n12" ]]; then
+	echo "$(tput setaf 7)No Passcode Buttons"
+else
+	n12=$(eval echo "$n12")
+	cd $n12/
+	cp -ar "$n12" /home/osito/Desktop/Turtle/"$project"/Library/Themes
+fi
+
+read -p "Control Center Toggles?: " n13
+
+if [[ -z "$n13" ]]; then
+	echo "$(tput setaf 7)No Control Center Toggles Theme"
+else
+	n13=$(eval echo "$n13")
+	cd $n13/
+	cp -ar "$n13" /home/osito/Desktop/Turtle/"$project"/Library/Themes
+fi
+
+read -p "Cellular Bars?: " n14
+
+if [[ -z "$n14" ]]; then
+	echo "No Cell Bars Theme"
+else
+	n14=$(eval echo "$n14")
+	cd $n14/
+	cp -ar "$n14" /home/osito/Desktop/Turtle/"$project"/Library/Themes
+fi
+
+read -p "Wifi Bars?: " n15
+
+if [[ -z "$n15" ]]; then
+	echo "No Wifi Bars Theme"
+else
+	n15=$(eval echo "$n15")
+	cd $n15/
+	cp -ar "$n15" /home/osito/Desktop/Turtle/"$project"/Library/Themes
 fi
 
 read -p "$(tput setaf 2)Package Name (lower case): $(tput setaf 7)" package && echo "Package: com.$author.$package" >> /home/osito/Desktop/Turtle/"$project"/DEBIAN/control
